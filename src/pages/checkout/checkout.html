@@ -1,0 +1,87 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Checkout</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+<ion-row>
+  <ion-col>
+    <p>Do you want to modify your current order?</p>
+  </ion-col>
+  <ion-col>
+    <button (click)="goToServices">Services</button>
+  </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-col>
+    <p>Service:{{typeOfCleaning}}</p>
+  </ion-col>
+  <ion-col>
+    <button (click)="delete">-</button>
+  </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-col>
+    <p>Subtotal</p>
+  </ion-col>
+  <ion-col>
+    <p>{{Subtotal}}</p>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col>
+    <p>Tax</p>
+  </ion-col>
+  <ion-col>
+    <p>{{Tax}}</p>
+  </ion-col>
+</ion-row>
+<ion-row>
+  <ion-col>
+    <p>Total</p>
+  </ion-col>
+  <ion-col>
+    <p>{{Total}}</p>
+  </ion-col>
+</ion-row>
+
+<p>Contact Info</p>
+
+ <ion-row>
+      <ion-col>
+      </ion-col>
+
+      <ion-col>
+        <ion-card color="lavender">
+          <form (ngSubmit)="login()" #registerForm="ngForm" >
+            <ion-list inset>
+              <ion-item color="lavender">
+                 <ion-label fixed color="dark">Username :</ion-label>
+                <ion-input type="text" placeholder="User" name="user" [(ngModel)]="registerCredentials.user" required></ion-input>
+              </ion-item>
+            
+              <ion-item color="lavender">
+                <ion-label fixed color="dark">Password :</ion-label>
+                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+              </ion-item>
+            </ion-list>
+        
+            <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
+          
+          </form>
+        </ion-card>  
+      </ion-col>
+    
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+</ion-content>

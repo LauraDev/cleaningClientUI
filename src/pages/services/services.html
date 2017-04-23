@@ -1,0 +1,63 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Services</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h5>
+    {{number}} Cleaners are available
+  </h5>
+  <p>
+    Pick the service that you would like to receive
+  </p>
+
+  <ion-item>
+    <ion-label color="primary">Surface to clean</ion-label>
+    <ion-select>
+      <ion-option value="0">Studio</ion-option>
+      <ion-option value="1">1 Bedroom Appartment / House</ion-option>
+      <ion-option value="2">2 Bedroom Appartment / House</ion-option>
+      <ion-option value="3">3 Bedroom Appartment / House</ion-option>
+      <ion-option value="4">Over XXX m2</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-card (click)="goToOtherPage()">
+    <ion-row>
+      Quick Tidy Up
+    </ion-row>
+    <ion-row>
+      Includes: ....
+    </ion-row>
+    <ion-row>
+      Price: ....
+    </ion-row>
+  </ion-card>
+  <ion-card (click)="goToOtherPage()">
+    <ion-row>
+      Full Cleaning
+    </ion-row>
+    <ion-row>
+      Includes: ....
+    </ion-row>
+    <ion-row>
+      Price: ....
+    </ion-row>
+  </ion-card>
+  <ion-card (click)="goToOtherPage()">
+    <ion-row>
+      Spring Cleaning
+    </ion-row>
+    <ion-row>
+      Includes: ....
+    </ion-row>
+    <ion-row>
+      Price: ....
+    </ion-row>
+  </ion-card>
+</ion-content>
