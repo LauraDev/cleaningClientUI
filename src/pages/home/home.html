@@ -18,14 +18,22 @@
       LOCATION
     </h3>
   </ion-row>
-  <ion-row text-align-center>
-    <form [formGroup]="location">
-      <ion-input formControlName="address" placeholder="Address" type="text">
-      </ion-input>
-      <p *ngIf="!isValid('address')" danger padding-left>Invalid Address</p>
-    </form>
-    <button ion-button round clear (click)='onSubmit()' [disabled]="!location.valid">Next
-    </button>
-  </ion-row>  
+
+  <ion-toolbar>
+    <ion-searchbar 
+        [(ngModel)]="address.query" (ionInput)="updateSearch()">
+    </ion-searchbar>
+  </ion-toolbar>
+
+  <ion-list>
+    <ion-item *ngFor="let item of autocompleteItems" tappable (click)="chooseItem(item)">
+      {{ item }}
+    </ion-item>
+  </ion-list>
+
+  <button ion-button icon-left clear small (click)="goToServices()">
+    <ion-icon name="arrow-forward"></ion-icon>
+    <div>NEXT</div>
+  </button>
 
 </ion-content>

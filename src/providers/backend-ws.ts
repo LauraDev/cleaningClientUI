@@ -3,16 +3,15 @@ import { AlertController } from 'ionic-angular';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-
 @Injectable()
 export class BackendWs {
   
   backendWsUrl=  'http://localhost:3000/clients/db';
-  backendWsUrl2= 'http://localhost:3000/clients/geocode';
+  backendWsUrl2= 'http://localhost:3000/cleaners/geocode';
 
   constructor(public http: Http,
               public alertCtrl: AlertController,) {
-   
+                this.http = http;
   }
 
   public write(value: string): Promise<string>{
