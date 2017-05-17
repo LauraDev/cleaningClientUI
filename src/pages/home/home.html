@@ -12,26 +12,28 @@
       <img src="assets/img/img-location.png"/>
     </ion-col>
   </ion-row>
-    
+     
   <ion-row>
     <h3>
       LOCATION
     </h3>
   </ion-row>
-
+  
+  <form [formGroup]="location" (ngSubmit)="goToService()">
   <ion-toolbar>
     <ion-searchbar 
-        [(ngModel)]="address.query" (ionInput)="updateSearch()">
+        [(ngModel)]="address.query" formControlName="address" (ionInput)="updateSearch()">
     </ion-searchbar>
   </ion-toolbar>
-
+  </form>
+  
   <ion-list>
     <ion-item *ngFor="let item of autocompleteItems" tappable (click)="chooseItem(item)">
       {{ item }}
     </ion-item>
   </ion-list>
 
-  <button ion-button icon-left clear small (click)="goToServices()">
+  <button ion-button icon-left clear small (click)="goToServices()" [disabled]="!location.valid">
     <ion-icon name="arrow-forward"></ion-icon>
     <div>NEXT</div>
   </button>

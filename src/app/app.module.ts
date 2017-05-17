@@ -7,8 +7,11 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { BackendWs } from '../providers/backend-ws';
 import { AuthService } from "../providers/authservice";
+import { PriceClass } from "../providers/dto/priceClass";
+import { ClientClass } from "../providers/dto/clientClass";
+import { FormValidation } from "../providers/util/formValidation";
 
-import { AboutPage } from '../pages/about/about';
+import { MyAccount } from '../pages/myAccount/myAccount';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -22,13 +25,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
+    MyAccount,
     ContactPage,
     HomePage,
     TabsPage,
     Services,
     Checkout,
-    Confirm
+    Confirm,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
+    MyAccount,
     ContactPage,
     HomePage,
     TabsPage,
@@ -51,6 +54,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     BackendWs,
     AuthService,
+    PriceClass,
+    ClientClass,
+    FormValidation,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

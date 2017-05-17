@@ -6,58 +6,48 @@
   </ion-navbar>
 
 </ion-header>
-
+ 
 
 <ion-content padding>
   <h5>
-    {{number}} Cleaners are available
+    {{number | json }} available {{ cleaner }}
   </h5>
-  <p>
+  <p [hidden]="!value">
     Pick the service that you would like to receive
   </p>
 
-  <ion-item>
+  <ion-item [hidden]="!value">
     <ion-label color="primary">Surface to clean</ion-label>
-    <ion-select>
+    <ion-select (ionChange)="onChange(realSurface)"[(ngModel)]="realSurface" id="realSurface">
       <ion-option value="0">Studio</ion-option>
-      <ion-option value="1">1 Bedroom Appartment / House</ion-option>
-      <ion-option value="2">2 Bedroom Appartment / House</ion-option>
-      <ion-option value="3">3 Bedroom Appartment / House</ion-option>
+      <ion-option value="1">1 Bedroom Apartment / House</ion-option>
+      <ion-option value="2">2 Bedroom Apartment / House</ion-option>
+      <ion-option value="3">3 Bedroom Apartment / House</ion-option>
       <ion-option value="4">Over XXX m2</ion-option>
     </ion-select>
   </ion-item>
 
-  <ion-card (click)="goToOtherPage()">
+ <ion-item [hidden]="!value2" *ngFor="let pack of package ">
+  
+  <ion-card (click)="showTime(pack)" [ngClass]="( value3 == 1) ? 'bold': 'normal'">
     <ion-row>
-      Quick Tidy Up
+      {{ pack.type }}
     </ion-row>
     <ion-row>
-      Includes: ....
+      Includes: {{ pack.service }}
     </ion-row>
     <ion-row>
-      Price: ....
-    </ion-row>
-  </ion-card>
-  <ion-card (click)="goToOtherPage()">
-    <ion-row>
-      Full Cleaning
-    </ion-row>
-    <ion-row>
-      Includes: ....
-    </ion-row>
-    <ion-row>
-      Price: ....
+      Price: {{ pack.price }}
     </ion-row>
   </ion-card>
-  <ion-card (click)="goToOtherPage()">
-    <ion-row>
-      Spring Cleaning
-    </ion-row>
-    <ion-row>
-      Includes: ....
-    </ion-row>
-    <ion-row>
-      Price: ....
-    </ion-row>
-  </ion-card>
+ 
+ </ion-item>
+
+<ion-item [hidden]="!value3">
+  <ion-label>When do you need the cleaning?</ion-label>
+  <ion-datetime type="datetime-local" displayFormat="DD-MMM-YYYY, HH-" pickerFormat="DD-MMM-YYYY, HH" min="2017" max="2017-10-31" 
+                (ionChange)="goToCheckout(myDate)" [(ngModel)]="myDate" minuteInterval-30>
+  </ion-datetime> 
+ </ion-item>
+
 </ion-content>

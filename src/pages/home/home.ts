@@ -1,10 +1,13 @@
 import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { FormGroup , FormBuilder, Validators } from '@angular/forms';
 
 import { BackendWs } from '../../providers/backend-ws'
 
 import { Services } from '../services/services';
+import { Registration } from '../registration/registration';
+
 
 @Component({
   selector: 'page-home',
@@ -16,23 +19,32 @@ export class HomePage {
   autocompleteItems;
   address;
   service = new google.maps.places.AutocompleteService();
-  //Coordinates fron google
-  public geocode: any; 
-  //user Infos
-  public currentUser: { address:string, lat:string, lng:string } 
-                    = { address:'', lat:'', lng:'' };
+  
+  //Cleaners within 10k
+  public number;
+  public cleaners = new Array();
+  //Disable Next button
+  public location: FormGroup;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public alertCtrl: AlertController,
               public storage: Storage,
+              public formBuilder: FormBuilder,
               public backendWs: BackendWs,
               private zone: NgZone) {
 
     this.autocompleteItems = [];
     this.address = {query: ''};
+    this.location = this.formBuilder.group( { 'address': ['', Validators.required]})
  }
-  //List of possible addresses
+  //Disable the Next button when there is no provided address 
+  isValid(field: string) {
+    let formField = this.location.get(field);
+    return formField.valid || formField.pristine;
+  }
+  
+  //List of possible addresses (from google)
   updateSearch() {
     if (this.address.query == '') {
       this.autocompleteItems = [];
@@ -52,20 +64,22 @@ export class HomePage {
   }
   //Client's address selection
   chooseItem(item: any) {
-    this.address.query = item;
-    this.currentUser.address = this.address.query 
+    this.address.query = item; 
     this.autocompleteItems = [];
     
-  }
+  } 
   goToServices() {
-  //Get Geocodes && number of available cleaners
+  //Get infos of available cleaners
     this.backendWs.goecReq(JSON.stringify(this.address)).then(
                data => {
                  if (data.length > 0){
-                   for (let infoAddr of data) {
-                        this.geocode = infoAddr; 
-                        this.currentUser.lat = this.geocode.latitude; 
-                        this.currentUser.lng = this.geocode.longitude;
+                   for (let info of data) {
+                        let infos = info; 
+                        this.cleaners.push(infos);
+                        this.number = this.cleaners[0].length;
+                        this.storage.set('number', this.number);
+  //Push the next page with the number of available cleaners  
+                        this.navCtrl.push(Services, this.number); 
                    }
                  }
                  else {
@@ -79,10 +93,6 @@ export class HomePage {
                },
              );
   //Set data in storage
-    this.storage.set('address', this.currentUser.address);
-  
-  //Push the next page  
-    console.log(JSON.stringify(this.currentUser))
-    this.navCtrl.push(Services, this.currentUser); 
+    this.storage.set('address', this.address.query);
   }
 }

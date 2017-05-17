@@ -6,12 +6,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BackendWs {
   
-  backendWsUrl=  'http://localhost:3000/clients/db';
-  backendWsUrl2= 'http://localhost:3000/cleaners/geocode';
+  backendWsUrl=  'http://localhost:3006/users';
+  backendWsUrl2= 'http://localhost:3000/clients/geocode';
 
   constructor(public http: Http,
-              public alertCtrl: AlertController,) {
-                this.http = http;
+              public alertCtrl: AlertController,) 
+              {
+              this.http = http;
   }
 
   public write(value: string): Promise<string>{
@@ -38,6 +39,27 @@ export class BackendWs {
         );
     });
   }
+
+  public ReqData(value:string): Promise<Array<Object>>{
+    // return new Promise((resolve, reject) => resolve('ok'));
+    return new Promise(resolve => {
+      this.http.get(this.backendWsUrl)
+        .map(res => res.json())
+        .subscribe(
+          data => {resolve(data);
+          },
+          err => {
+            //console.log('Error 1 reading to Ws')
+            let alert = this.alertCtrl.create({
+              title: 'ERROR',
+              subTitle: 'Failed to connect to Database',
+              buttons: ['OK']
+            });
+            alert.present(prompt);
+          } 
+        );
+     });
+   }
 
   public goecReq(value: string): Promise<string>{
     // return new Promise((resolve, reject) => resolve('ok'));

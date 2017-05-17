@@ -10,62 +10,83 @@
 
 <ion-content padding>
 
-<ion-row>
-  <ion-col>
-    <p>Do you want to modify your current order?</p>
-  </ion-col>
-  <ion-col>
-    <button (click)="goToServices">Services</button>
-  </ion-col>
-</ion-row>
+<div>
+    <p>Surface: {{ surface }}</p>
+    <p>Service: {{ package.pack.type | json }}</p>
+    <p>Date: {{ clientClass.allInfos.cleaningDate }}</p>
+    <ion-row> 
+      <p>Total: {{ package.pack.price }}</p> 
+      <button (click)="goToServices()">Change my order</button>
+    </ion-row>
+</div>
 
-<ion-row>
-  <ion-col>
-    <p>Service:{{typeOfCleaning}}</p>
-  </ion-col>
-  <ion-col>
-    <button (click)="delete">-</button>
-  </ion-col>
-</ion-row>
+<ion-card-header>
+  <ion-row>
+    <ion-col>
+      <button ion-button full (click)="blockRegistration()" [ngClass]="( color == 1) ? 'bold': 'normal'"> Register </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button full (click)="blockLogin()" [ngClass]="( color == 0) ? 'bold': 'normal'"> Login </button>
+    </ion-col>
+  </ion-row>
+</ion-card-header>
 
-<ion-row>
+<div [hidden]="value == 1">
   <ion-col>
-    <p>Subtotal</p>
-  </ion-col>
-  <ion-col>
-    <p>{{Subtotal}}</p>
-  </ion-col>
-</ion-row>
-<ion-row>
-  <ion-col>
-    <p>Tax</p>
-  </ion-col>
-  <ion-col>
-    <p>{{Tax}}</p>
-  </ion-col>
-</ion-row>
-<ion-row>
-  <ion-col>
-    <p>Total</p>
-  </ion-col>
-  <ion-col>
-    <p>{{Total}}</p>
-  </ion-col>
-</ion-row>
+      <ion-card>
+        <ion-card-content>
 
-<p>Contact Info</p>
+          
+          <ion-list>
+          <form [formGroup]="Clients" (ngSubmit)="register()">
+     
+            <ion-item>
+              <ion-label>First Name</ion-label>
+              <ion-input [(ngModel)]="client.firstName" formControlName="firstName" type="text" id="firstName" spellcheck="false" autocapitalize="off">
+              </ion-input>
+            </ion-item>
+            <p *ngIf="!isValid('firstName')" danger padding-left>The First Name can only contain Letters A-Z</p>
 
- <ion-row>
-      <ion-col>
-      </ion-col>
+            <ion-item>
+              <ion-label>Last name</ion-label>
+              <ion-input [(ngModel)]="client.lastName" formControlName="lastName" type="text" id="lastName" spellcheck="false" autocapitalize="off"></ion-input>
+            </ion-item>
+            <p *ngIf="!isValid('lastName')" danger padding-left>The Last Name can only contain Letters A-Z</p>
+
+            <ion-item>
+              <ion-label>E-mail</ion-label>
+              <ion-input [(ngModel)]="client.email" formControlName="email" type="text" id="email" spellcheck="false" autocapitalize="off"></ion-input>
+            </ion-item>
+            <p *ngIf="!isValid('email')" danger padding-left>Invalid E-mail</p>
+      
+            <ion-item>
+              <ion-label>Password</ion-label>
+              <ion-input [(ngModel)]="client.password" type="password" formControlName="password" id="email" spellcheck="false" autocapitalize="off"></ion-input>
+            </ion-item>
+            <p *ngIf="!isValid('password')" danger padding-left>Invalid Password / 6 characters minimum</p>
+
+        
+            <div text-center>
+              <button ion-button round type="submit" [disabled]="!Clients.valid"> Register
+              </button>
+            </div>
+
+          </form>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-col>
+</div>
+
+<div [hidden]="value == 0">
 
       <ion-col>
         <ion-card color="lavender">
           <form (ngSubmit)="login()" #registerForm="ngForm" >
             <ion-list inset>
               <ion-item color="lavender">
-                 <ion-label fixed color="dark">Username :</ion-label>
-                <ion-input type="text" placeholder="User" name="user" [(ngModel)]="registerCredentials.user" required></ion-input>
+                 <ion-label fixed color="dark">E-mail :</ion-label>
+                <ion-input type="text" placeholder="E-mail" name="user" [(ngModel)]="registerCredentials.user" required></ion-input>
               </ion-item>
             
               <ion-item color="lavender">
@@ -79,9 +100,6 @@
           </form>
         </ion-card>  
       </ion-col>
-    
-      <ion-col>
-      </ion-col>
-    </ion-row>
-
+  
+</div>
 </ion-content>
